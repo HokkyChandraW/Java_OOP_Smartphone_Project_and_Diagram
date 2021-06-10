@@ -1,0 +1,12 @@
+public interface Phone {
+    static final int MAX_VOLUME = 100;
+    static final int MIN_VOLUME = 0;
+    
+
+
+    void powerOn();
+    void powerOff();
+    void volumeUp();
+    void volumeDown();
+    void runApp();
+}

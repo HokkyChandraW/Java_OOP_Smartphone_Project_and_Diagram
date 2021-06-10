@@ -1,0 +1,96 @@
+//PhoneUser.java//
+context PhoneUser :: Phone 
+    pre  : true
+    post : self.Phone = Phone
+
+context PhoneUser :: turnOnThePhone()
+    pre : self.isPowerOn == false
+    post : self.isPowerOn == true
+
+context PhoneUser :: turnOffThePhone()
+    pre : self.ispowerOff == false
+    post : self.ispowerOff == true
+
+context PhoneUser :: makePhoneLouder()
+    pre : self.volumeUp == false
+    post : self.volumeUp == true
+
+context PhoneUser :: makePhoneSilent()
+    pre : self.volumeDown == false
+    post : self.volumeDown == true
+
+context PhoneUser :: useKalkulator()
+    pre : self.runApp == false
+    post : self.runApp == true
+
+//Xiaomi.java//
+context Xiaomi :: isPowerOn()
+    pre : self.isPowerOn == false
+    post : self.isPowerOn == true
+            then print : ("Handphone menyala...")
+                         ("Selamat datang di Xiaomi")
+                         ("Android version 29)
+
+context Xiaomi :: ispowerOff()
+    pre : self.isPowerOn == true
+    post : self.ispowerOn == false
+            then print : ("Handphone Dimatikan")
+
+context Xiaomi :: volumeUp()
+    pre : self.isPowerOn == true
+    post : self.volume = MAX_VOLUME
+            if this.isPowerOn == true
+            then if self.volume == self.MAX_VOLUME
+            then print ("Volume FULL!!")
+            and print ("sudah + this.getVolume() + "%")
+            else self.volume = self.volume += 10
+            then print ("Volume sekarang : " + this.getVolume())
+            else print ("Nyalakan dulu Hp-nya")
+
+context Xiaomi :: volumeDown()
+    pre : self.isPowerOn == true
+    post : self.volume = MIN_VOLUME
+            if this.isPowerOn == true
+            then if self.volume == self.MIN_VOLUME
+            then print ("Volume = 0% ")
+            else self.volume == self.volume -= 10
+            then print ("Volume sekarang : " + this.getVolume())
+            else print ("Nyalakan dulu Hp-nya")
+
+context Xiaomi :: getVolume()
+    pre  : true
+    post : result = this.volume
+
+context Xiaomi :: runApp()
+    pre : pilihan <= 5 and pilihan >= 1
+    post : if pilihan == 1 : kalkulator.penjumlahan()
+            else pilihan == 2 then kalkulator.pengurangan()
+            else pilihan == 3 then kalkulator.perkalian()
+            else pilihan == 4 then kalkulator.pembagian()
+            else pilihan == 5 then system.exit(0)
+            then print ("Anda harus mengisi angka")
+
+//kalkulator.java//
+context kalkulator :: kalkulator(a : float, b : float)
+    post : self.bil1 = a
+            and self.bil2 = b
+
+context kalkulator :: penjumlahan()
+    pre  : true
+    post : self.total = this.bil1 + this.bil2
+
+context kalkulator :: pengurangan()
+    pre  : true
+    post : self.total = this.bil1 - this.bil2
+
+context kalkulator :: perkalian()
+    pre  : true
+    post : self.total = this.bil1 * this.bil2
+
+context kalkulator :: pembagian()
+    pre  : true
+    post : self.total = this.bil1 : this.bil2
+
+context kalkulator :: getTotal()
+    pre  : true
+    post : result = this.total
